@@ -1,0 +1,57 @@
+import docker
+import yaml
+
+
+def analyze_dockerfile(dockerfile_path):
+    with open(dockerfile_path, 'r') as file:
+        dockerfile_contents = file.read()
+
+    if 'USER root' in dockerfile_contents:
+        print(f"Warning: Dockerfile {dockerfile_path} is running as root.")
+
+
+
+def analyze_kubernetes_config(config_path):
+    with open(config_path, 'r') as file:
+        config_contents = file.read()
+
+    # Parse the Kubernetes configuration YAML
+    config = yaml.safe_load(config_contents)
+
+    # Check containers for root user or excessive privileges
+    for item in config.get('spec', {}).get('containers', []):
+        if item.get('securityContext', {}).get('runAsUser') == 0:
+            print(f"Warning: Container in {config_path} is running as root.")
+
+            print("Consider using a non-root user with the least privileges required.")
+
+        # Additional analysis logic for excessive privileges
+        if item.get('securityContext', {}).get('capabilities') is not None:
+          
+            capabilities = item.get('securityContext', {}).get('capabilities', {}).get('add', [])
+            if capabilities:
+                print(f"Warning: Container in {config_path} has excessive capabilities:")
+                for cap in capabilities:
+                    print(f" - {cap}")
+
+            # Check if unnecessary capabilities are present
+            required_capabilities = ['NET_ADMIN', 'SYS_ADMIN']
+            unnecessary_capabilities = set(capabilities) - set(required_capabilities)
+            if unnecessary_capabilities:
+                print(f"Warning: Container in {config_path} has unnecessary capabilities:")
+                for cap in unnecessary_capabilities:
+                    print(f" - {cap}")
+
+
+def main():
+
+    dockerfile_path = 'path/to/your/Dockerfile'
+    analyze_dockerfile(dockerfile_path)
+
+   
+    config_path = 'path/to/your/kubernetes/config'
+    analyze_kubernetes_config(config_path)
+
+
+if __name__ == '__main__':
+    main()
