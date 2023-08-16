@@ -1,0 +1,40 @@
+Initial Access:
+
+Spear Phishing: The group uses targeted phishing emails with malicious attachments or links to deliver their malware.
+Exploits: APT41 has been known to use both zero-day and known vulnerabilities to gain initial access to target systems. For instance, they exploited vulnerabilities in Cisco routers and Citrix devices.
+Execution:
+
+Scripting: The group uses scripts such as PowerShell, JavaScript, and VBScript to execute commands, move laterally, or deploy payloads.
+Persistence:
+
+Scheduled Tasks: APT41 sets tasks to maintain persistence on the infected host.
+Service Manipulation: They modify or create Windows services to ensure their tools or malware persist across reboots.
+Privilege Escalation:
+
+Exploitation of Vulnerabilities: They exploit system vulnerabilities to gain higher privileges on compromised systems.
+Defense Evasion:
+
+Deobfuscation: APT41 uses custom deobfuscation routines for their payloads.
+Process Injection: They inject malicious code into legitimate processes to hide their activities.
+Masquerading: They name their files and processes to resemble legitimate ones, making detection harder.
+Credential Access:
+
+Dumping Credentials: The group employs tools like Mimikatz to harvest credentials from memory.
+Discovery:
+
+They employ various methods to discover accounts, processes, or services running on compromised systems.
+Lateral Movement:
+
+Remote Services: APT41 uses remote services like RDP to move across networks.
+Valid Accounts: Leveraging stolen credentials, they access other machines in the network.
+Collection:
+
+They gather data from various directories, take screenshots, and also steal database contents.
+Exfiltration:
+
+Encrypted Channels: Data is often exfiltrated over encrypted channels to evade detection.
+Command and Control (C2):
+Multiple Protocols: APT41 has been observed using DNS, HTTP, and HTTPS for C2 communications.
+Dynamic DNS: They use dynamic DNS services to manage their C2 infrastructure.
+Malware & Tools:
+APT41 uses a range of custom tools and malware families, including WINNTI, BARIUM, and others. They have a varied arsenal that aids in multiple stages of attack.
